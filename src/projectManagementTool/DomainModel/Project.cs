@@ -2,7 +2,7 @@ namespace projectManagementTool.DomainModel
 {
 	public sealed class Project
 	{
-		public int Id { get; }
+		public long Id { get; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 
@@ -17,19 +17,19 @@ namespace projectManagementTool.DomainModel
 		{
 		}
 
-		public Project(int id)
+		public Project(long id)
 		{
 			this.Id = id;
 		}
 
-		public Project(int id, string name, string description)
+		public Project(long id, string name, string description)
 			: this(id)
 		{
 			this.Name = name;
 			this.Description = description;
 		}
 
-		public Project(int id, string name)
+		public Project(long id, string name)
 			: this(id, name, string.Empty)
 		{
 		}

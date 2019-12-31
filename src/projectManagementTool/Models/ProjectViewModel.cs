@@ -4,7 +4,7 @@ namespace projectManagementTool.Models
 {
 	public class ProjectViewModel
 	{
-		public int Id { get; }
+		public long Id { get; }
 
 		public String Name { get; set; }
 
@@ -20,7 +20,7 @@ namespace projectManagementTool.Models
 			this.Description = description;
 		}
 
-		public ProjectViewModel(int id, string name, string description)
+		public ProjectViewModel(long id, string name, string description)
 			: this(name, description)
 		{
 			this.Id = id;
