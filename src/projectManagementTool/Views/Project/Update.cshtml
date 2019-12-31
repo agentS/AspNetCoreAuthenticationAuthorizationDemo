@@ -1,0 +1,22 @@
+@model projectManagementTool.Models.ProjectViewModel
+@{
+	ViewData["Title"] = "Update Project";
+}
+
+<div class="text-center">
+	<h1 class="display-4">Update Project</h1>
+</div>
+
+<form asp-controller"Project" asp-action="UpdateProject" asp-route-projectId="@Model.Id" method="post">
+	<div class="form-group">
+		<label for="txtProjectName">Project name</label>
+		<input class="form-control" id="txtProjectName" placeholder="Project name" required 
+			asp-for="@Model.Name"/>
+	</div>
+	<div class="form-group">
+		<label for="txtDescription">Description</label>
+		<input class="form-control" id="txtDescription" placeholder="Description"
+			asp-for="@Model.Description"/>
+	</div>
+	<button type="submit" class="btn btn-primary">Update project</button>
+</form>
