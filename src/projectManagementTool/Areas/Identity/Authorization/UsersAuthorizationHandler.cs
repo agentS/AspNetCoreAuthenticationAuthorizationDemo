@@ -6,7 +6,7 @@ using projectManagementTool.Models;
 
 namespace projectManagementTool.Areas.Identity.Authorization
 {
-    public class AdministratorAuthorizationHandler : AuthorizationHandler<OperationAuthorizationRequirement, ProjectViewModel>
+    public class UsersAuthorizationHandler : AuthorizationHandler<OperationAuthorizationRequirement, ProjectViewModel>
     {
         protected override Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
@@ -19,17 +19,12 @@ namespace projectManagementTool.Areas.Identity.Authorization
                 return Task.CompletedTask;
             }
 
-            if (
-                requirement.Name != Constants.ListProjectsOperationName
-                && requirement.Name != Constants.AddProjectOperationName
-                && requirement.Name != Constants.UpdateProjectOperationName
-                && requirement.Name != Constants.DeleteProjectOperationName
-            )
+            if (requirement.Name != Constants.ListProjectsOperationName)
             {
                 return Task.CompletedTask;
             }
-
-            if (context.User.IsInRole(Constants.AdministratorsRole))
+            
+            if (context.User.IsInRole(Constants.UsersRole))
             {
                 context.Succeed(requirement);
             }

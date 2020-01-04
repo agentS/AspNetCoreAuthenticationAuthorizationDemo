@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -31,6 +30,14 @@ namespace projectManagementTool.Controllers
 		[HttpGet("/")]
 		public async Task<IActionResult> Index()
 		{
+			var authorized = await this.authorizationService.AuthorizeAsync(
+				this.User, new ProjectViewModel(), ProjectOperations.List
+			);
+			if (!authorized.Succeeded)
+			{
+				return this.Forbid();
+			}
+			
 			var projects = (await this.projectManager.FindAllProjectsAsync())
 				.Select(project => new ProjectViewModel(project.Id, project.Name, project.Description))
 				.ToList();
@@ -82,20 +89,19 @@ namespace projectManagementTool.Controllers
 			{
 				return this.Redirect("/error");
 			}
+			
+			var authorized = await this.authorizationService.AuthorizeAsync(
+				this.User, new ProjectViewModel(), ProjectOperations.Update
+			);
+			if (!authorized.Succeeded)
+			{
+				return this.Forbid();
+			}
 
 			var project = await this.projectManager.FindByIdAsync(projectId);
 			if (project != null)
 			{
 				var model = new ProjectViewModel(project.Id, project.Name, project.Description);
-			
-				var authorized = await this.authorizationService.AuthorizeAsync(
-					this.User, model, ProjectOperations.Update
-				);
-				if (!authorized.Succeeded)
-				{
-					return this.Forbid();
-				}
-				
 				return this.View(model);
 			}
 			else
@@ -134,17 +140,16 @@ namespace projectManagementTool.Controllers
 				return this.Redirect("/error");
 			}
 			
-			var projectToDelete = await this.projectManager.FindByIdAsync(projectId);
-			var model = new ProjectViewModel(projectToDelete.Id, projectToDelete.Name, projectToDelete.Description);
-			
 			var authorized = await this.authorizationService.AuthorizeAsync(
-				this.User, model, ProjectOperations.Delete
+				this.User, new ProjectViewModel(), ProjectOperations.Delete
 			);
 			if (!authorized.Succeeded)
 			{
 				return this.Forbid();
 			}
 			
+			var projectToDelete = await this.projectManager.FindByIdAsync(projectId);
+			var model = new ProjectViewModel(projectToDelete.Id, projectToDelete.Name, projectToDelete.Description);
 			if (projectToDelete != null)
 			{
 				await this.projectManager.DeleteProjectAsync(projectToDelete);

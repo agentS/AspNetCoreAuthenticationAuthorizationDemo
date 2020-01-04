@@ -38,6 +38,7 @@ namespace projectManagementTool
                 configuration.Filters.Add(new AuthorizeFilter(authorizationPolicy));
             });
 
+            services.AddSingleton<IAuthorizationHandler, UsersAuthorizationHandler>();
             services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
         }
 

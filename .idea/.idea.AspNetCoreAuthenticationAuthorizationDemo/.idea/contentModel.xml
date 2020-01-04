@@ -13,6 +13,7 @@
             <e p="Identity" t="Include">
               <e p="Authorization" t="Include">
                 <e p="AdministratorsAuthorizationHandler.cs" t="Include" />
+                <e p="UsersAuthorizationHandler.cs" t="Include" />
               </e>
               <e p="Data" t="Include">
                 <e p="Constants.cs" t="Include" />
