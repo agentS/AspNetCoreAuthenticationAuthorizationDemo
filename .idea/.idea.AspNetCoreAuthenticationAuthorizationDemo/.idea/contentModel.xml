@@ -81,7 +81,6 @@
           <e p="Properties" t="Include">
             <e p="launchSettings.json" t="Include" />
           </e>
-          <e p="ScaffoldingReadMe.txt" t="Include" />
           <e p="Startup.cs" t="Include" />
           <e p="Views" t="Include">
             <e p="Error" t="Include">
