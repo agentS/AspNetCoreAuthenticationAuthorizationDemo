@@ -1,12 +1,10 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
-using projectManagementTool.DomainModel;
-using projectManagementTool.Data;
+using projectManagementTool.Areas.Identity.Data;
 using projectManagementTool.Models;
 
-namespace projectManagementTool.Authorization
+namespace projectManagementTool.Areas.Identity.Authorization
 {
     public class AdministratorAuthorizationHandler : AuthorizationHandler<OperationAuthorizationRequirement, ProjectViewModel>
     {

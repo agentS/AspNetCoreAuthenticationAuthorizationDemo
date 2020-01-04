@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using projectManagementTool.Data;
-using projectManagementToolUser.DomainModel;
+using projectManagementTool.Areas.Identity.Data;
 
 [assembly: HostingStartup(typeof(projectManagementTool.Areas.Identity.IdentityHostingStartup))]
 namespace projectManagementTool.Areas.Identity

@@ -1,13 +1,10 @@
+using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
-using projectManagementToolUser.DomainModel;
-
-namespace projectManagementTool.Data
+namespace projectManagementTool.Areas.Identity.Data
 {
 	public static class SeedData
     {

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using projectManagementTool.Authorization;
+using projectManagementTool.Areas.Identity.Authorization;
 using projectManagementTool.BL.Extension;
 
 namespace projectManagementTool

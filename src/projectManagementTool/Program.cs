@@ -8,8 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
-using projectManagementTool.Data;
+using projectManagementTool.Areas.Identity.Data;
 
 namespace projectManagementTool
 {

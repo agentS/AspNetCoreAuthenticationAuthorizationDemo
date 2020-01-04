@@ -1,4 +1,4 @@
-namespace projectManagementTool.Data
+namespace projectManagementTool.Areas.Identity.Data
 {
 	public static class Constants
 	{

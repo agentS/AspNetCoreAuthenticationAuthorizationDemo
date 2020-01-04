@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using projectManagementToolUser.DomainModel;
 
 namespace projectManagementTool.Areas.Identity.Pages.Account
 {

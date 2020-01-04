@@ -5,10 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using projectManagementTool.Areas.Identity.Data;
 using projectManagementTool.Models;
 using projectManagementTool.DomainModel;
 using projectManagementTool.BL;
-using projectManagementTool.Data;
 
 namespace projectManagementTool.Controllers
 {

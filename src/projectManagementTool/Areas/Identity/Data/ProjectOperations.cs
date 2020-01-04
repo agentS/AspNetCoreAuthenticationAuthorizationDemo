@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 
-namespace projectManagementTool.Data
+namespace projectManagementTool.Areas.Identity.Data
 {
     public static class ProjectOperations
     {

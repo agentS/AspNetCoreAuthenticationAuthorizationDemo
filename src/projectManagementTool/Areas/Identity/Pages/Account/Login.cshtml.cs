@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using projectManagementToolUser.DomainModel;
+using projectManagementTool.Areas.Identity.Data;
 
 namespace projectManagementTool.Areas.Identity.Pages.Account
 {
