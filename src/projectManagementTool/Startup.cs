@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using projectManagementTool.Authorization;
 using projectManagementTool.BL.Extension;
 
 namespace projectManagementTool
@@ -25,34 +27,46 @@ namespace projectManagementTool
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
             //services.AddInMemoryBusinessLogic();
             services.AddAdoNetBusinessLogic(this.Configuration);
+            
+            services.AddControllersWithViews(configuration =>
+            {
+                var authorizationPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                configuration.Filters.Add(new AuthorizeFilter(authorizationPolicy));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder application, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                application.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseExceptionHandler("/error");
+                application.UseExceptionHandler("/error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                application.UseHsts();
             }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            application.UseHttpsRedirection();
+            application.UseStaticFiles();
 
-            app.UseRouting();
+            application.UseRouting();
 
-            app.UseAuthorization();
+            application.UseAuthentication();
+            application.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            application.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllers();
+                endpoints.MapRazorPages();
             });
         }
     }

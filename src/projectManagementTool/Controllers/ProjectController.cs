@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using projectManagementTool.Models;
 using projectManagementTool.DomainModel;
 using projectManagementTool.BL;
+using projectManagementTool.Data;
 
 namespace projectManagementTool.Controllers
 {
@@ -15,9 +16,16 @@ namespace projectManagementTool.Controllers
 	{
 		private readonly IProjectManager projectManager;
 
-		public ProjectController(IProjectManager projectManager)
+		private IAuthorizationService authorizationService;
+
+		public ProjectController(
+			IProjectManager projectManager,
+			IAuthorizationService authorizationService
+		)
 		{
 			this.projectManager = projectManager;
+
+			this.authorizationService = authorizationService;
 		}
 
 		[HttpGet("/")]
@@ -30,15 +38,37 @@ namespace projectManagementTool.Controllers
 		}
 
 		[HttpGet("/create")]
-		public IActionResult Create()
+		public async Task<IActionResult> Create()
 		{
 			var model = new ProjectViewModel();
+			
+			var authorized = await this.authorizationService.AuthorizeAsync(
+				this.User, model, ProjectOperations.Create
+			);
+			if (!authorized.Succeeded)
+			{
+				return this.Forbid();
+			}
+			
 			return this.View(model);
 		}
 
 		[HttpPost("/createProject")]
 		public async Task<IActionResult> CreateProject(ProjectViewModel project)
 		{
+			if (!this.ModelState.IsValid)
+			{
+				return this.Redirect("/create");
+			}
+			
+			var authorized = await this.authorizationService.AuthorizeAsync(
+				this.User, project, ProjectOperations.Create
+			);
+			if (!authorized.Succeeded)
+			{
+				return this.Forbid();
+			}
+			
 			var createdProject = await this.projectManager.CreateProjectAsync(
 				new Project(project.Name, project.Description)
 			);
@@ -48,10 +78,25 @@ namespace projectManagementTool.Controllers
 		[HttpGet("/update")]
 		public async Task<IActionResult> Update(int projectId)
 		{
+			if (!this.ModelState.IsValid)
+			{
+				return this.Redirect("/error");
+			}
+
 			var project = await this.projectManager.FindByIdAsync(projectId);
 			if (project != null)
 			{
-				return this.View(new ProjectViewModel(project.Id, project.Name, project.Description));
+				var model = new ProjectViewModel(project.Id, project.Name, project.Description);
+			
+				var authorized = await this.authorizationService.AuthorizeAsync(
+					this.User, model, ProjectOperations.Update
+				);
+				if (!authorized.Succeeded)
+				{
+					return this.Forbid();
+				}
+				
+				return this.View(model);
 			}
 			else
 			{
@@ -62,6 +107,19 @@ namespace projectManagementTool.Controllers
 		[HttpPost("/updateProject")]
 		public async Task<IActionResult> UpdateProject(ProjectViewModel project, int projectId)
 		{
+			if (!this.ModelState.IsValid)
+			{
+				return this.Redirect("/error");
+			}
+			
+			var authorized = await this.authorizationService.AuthorizeAsync(
+				this.User, project, ProjectOperations.Update
+			);
+			if (!authorized.Succeeded)
+			{
+				return this.Forbid();
+			}
+			
 			var updatedProject = await this.projectManager.UpdateProjectAsync(
 				new Project(projectId, project.Name, project.Description)
 			);
@@ -71,7 +129,22 @@ namespace projectManagementTool.Controllers
 		[HttpGet("/delete")]
 		public async Task<IActionResult> Delete(int projectId)
 		{
+			if (!this.ModelState.IsValid)
+			{
+				return this.Redirect("/error");
+			}
+			
 			var projectToDelete = await this.projectManager.FindByIdAsync(projectId);
+			var model = new ProjectViewModel(projectToDelete.Id, projectToDelete.Name, projectToDelete.Description);
+			
+			var authorized = await this.authorizationService.AuthorizeAsync(
+				this.User, model, ProjectOperations.Delete
+			);
+			if (!authorized.Succeeded)
+			{
+				return this.Forbid();
+			}
+			
 			if (projectToDelete != null)
 			{
 				await this.projectManager.DeleteProjectAsync(projectToDelete);

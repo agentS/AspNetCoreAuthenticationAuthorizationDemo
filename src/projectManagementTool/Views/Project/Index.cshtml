@@ -7,7 +7,10 @@
 	<h1 class="display-4">Projects</h1>
 </div>
 
-<a class="btn btn-success" asp-controller="Project" asp-action="Create">Create project</a>
+@if ((await AuthorizationService.AuthorizeAsync(User, new ProjectViewModel(), ProjectOperations.Create)).Succeeded)
+{
+	<a class="btn btn-success" asp-controller="Project" asp-action="Create">Create project</a>
+}
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -23,8 +26,22 @@
 			<tr>
 				<td>@project.Name</td>
 				<td>@project.Description</td>
-				<td><a class="btn btn-primary" asp-controller="Project" asp-action="Update" asp-route-projectId="@project.Id">Update</a></td>
-				<td><a class="btn btn-danger" asp-controller="Project" asp-action="Delete" asp-route-projectId="@project.Id">Delete</a></td>
+				@if ((await AuthorizationService.AuthorizeAsync(User, project, ProjectOperations.Update)).Succeeded)
+				{
+					<td><a class="btn btn-primary" asp-controller="Project" asp-action="Update" asp-route-projectId="@project.Id">Update</a></td>
+				}
+				else
+				{
+					<td>&nbsp;</td>
+				}
+				@if ((await AuthorizationService.AuthorizeAsync(User, project, ProjectOperations.Delete)).Succeeded)
+				{
+					<td><a class="btn btn-danger" asp-controller="Project" asp-action="Delete" asp-route-projectId="@project.Id">Delete</a></td>
+				}
+				else
+				{
+					<td>&nbsp;</td>
+				}
 			</tr>
 		}
 	</tbody>
