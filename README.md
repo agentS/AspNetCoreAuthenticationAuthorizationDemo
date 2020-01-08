@@ -25,3 +25,12 @@ sqlite3 projects.db
 ```sql
 CREATE TABLE project(id INTEGER NOT NULL, name TEXT NOT NULL, description TEXT, CONSTRAINT pk_project PRIMARY KEY(id));
 ```
+
+### External Authentication
+
+Add your client ID and client secret to the user secrets file in order to enable sign-in using Google's OAuth service:
+
+```bash
+dotnet user-secrets set GoogleOAuthClientId "yourClientID"
+dotnet user-secrets set GoogleOAuthClientSecret "yourSecret"
+```

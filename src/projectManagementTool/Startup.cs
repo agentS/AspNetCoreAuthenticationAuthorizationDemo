@@ -32,8 +32,8 @@ namespace projectManagementTool
 
             services.AddAuthentication().AddGoogle(opts =>
             {
-              opts.ClientId = "81378464210-seuuq1nfqgt0hdbigglbgc5setltknte.apps.googleusercontent.com";
-              opts.ClientSecret = "BHW_A9zAMNDmJnDAdsHW80fa";
+              opts.ClientId = this.Configuration["GoogleOAuthClientId"];
+              opts.ClientSecret = this.Configuration["GoogleOAuthClientSecret"];
             });
 
             services.AddControllersWithViews(configuration =>

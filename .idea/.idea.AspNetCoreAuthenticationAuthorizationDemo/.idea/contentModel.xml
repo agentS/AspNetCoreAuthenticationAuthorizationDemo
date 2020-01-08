@@ -160,6 +160,8 @@
               <e p="IdentityHostingStartup.cs" t="Include" />
               <e p="Pages" t="Include">
                 <e p="Account" t="Include">
+                  <e p="ExternalLogin.cshtml" t="Include" />
+                  <e p="ExternalLogin.cshtml.cs" t="Include" />
                   <e p="Login.cshtml" t="Include" />
                   <e p="Login.cshtml.cs" t="Include" />
                   <e p="Register.cshtml" t="Include" />
