@@ -82,6 +82,20 @@ namespace projectManagementTool.Controllers
 			return this.Redirect("/");
 		}
 
+		[HttpPost("/createProjectUnsecured")]
+		public async Task<IActionResult> CreateProjectWithoutAuthentication(ProjectViewModel project)
+		{
+			if (!this.ModelState.IsValid)
+			{
+				return this.Redirect("/create");
+			}
+			
+			var createdProject = await this.projectManager.CreateProjectAsync(
+				new Project(project.Name, project.Description)
+			);
+			return this.Redirect("/");
+		}
+
 		[HttpGet("/update")]
 		public async Task<IActionResult> Update(int projectId)
 		{
