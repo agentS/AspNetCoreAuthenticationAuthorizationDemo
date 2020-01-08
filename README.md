@@ -19,8 +19,9 @@ dotnet user-secrets set SeedUserPW "H0merFl1ntst0ne;"
 To create the project database run the following commands:
 
 ```bash
+cd src/projectManagementTool
 sqlite3 projects.db
-
+```
+```sql
 CREATE TABLE project(id INTEGER NOT NULL, name TEXT NOT NULL, description TEXT, CONSTRAINT pk_project PRIMARY KEY(id));
 ```
-
