@@ -27,9 +27,15 @@ namespace projectManagementTool
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddInMemoryBusinessLogic();
-            services.AddAdoNetBusinessLogic(this.Configuration);
-            
+            services.AddInMemoryBusinessLogic();
+            //services.AddAdoNetBusinessLogic(this.Configuration);
+
+            services.AddAuthentication().AddGoogle(opts =>
+            {
+              opts.ClientId = "81378464210-seuuq1nfqgt0hdbigglbgc5setltknte.apps.googleusercontent.com";
+              opts.ClientSecret = "BHW_A9zAMNDmJnDAdsHW80fa";
+            });
+
             services.AddControllersWithViews(configuration =>
             {
                 var authorizationPolicy = new AuthorizationPolicyBuilder()
