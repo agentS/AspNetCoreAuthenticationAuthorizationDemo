@@ -36,8 +36,8 @@ namespace IdentityServerDemo
                     RequirePkce = true,
                     ClientSecrets = { new Secret("montyburns".Sha256()) },
 
-                    RedirectUris = { "http://localhost:5001/" },
-                    PostLogoutRedirectUris = { "http://localhost:5001/" },
+                    RedirectUris = { "http://localhost:5001/oidc-signin" },
+                    PostLogoutRedirectUris = { "http://localhost:5001/oidc-signout" },
 
                     AllowOfflineAccess = true,
                     AllowedScopes =

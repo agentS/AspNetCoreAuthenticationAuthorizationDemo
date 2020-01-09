@@ -253,6 +253,7 @@
           <e p="projectManagementTool.db" t="Include" />
           <e p="projects.db" t="Include" />
           <e p="seedUserPassword.bash" t="Include" />
+          <e p="setOAuthSecrets.bash" t="Include" />
           <e p="wwwroot" t="Include">
             <e p="css" t="Include">
               <e p="site.css" t="Include" />

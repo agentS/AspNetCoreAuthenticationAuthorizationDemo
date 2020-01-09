@@ -34,3 +34,18 @@ Add your client ID and client secret to the user secrets file in order to enable
 dotnet user-secrets set GoogleOAuthClientId "yourClientID"
 dotnet user-secrets set GoogleOAuthClientSecret "yourSecret"
 ```
+
+Add your client ID and client secret for the Microsoft OAuth service:
+
+```bash
+dotnet user-secrets set MicrosoftOAuthClientId "yourClientID"
+dotnet user-secrets set MicrosoftOAuthClientSecret "yourSecret"
+```
+
+Add your client ID and client secret for the IdentityServer OAuth service:
+
+```bash
+dotnet user-secrets set IdentityServerAuthority "identityServerAuthority"
+dotnet user-secrets set IdentityServerClientId "yourClientID"
+dotnet user-secrets set IdentityServerClientSecret "yourSecret"
+```

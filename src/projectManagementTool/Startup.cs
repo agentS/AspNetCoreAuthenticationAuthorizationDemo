@@ -30,11 +30,28 @@ namespace projectManagementTool
             services.AddInMemoryBusinessLogic();
             //services.AddAdoNetBusinessLogic(this.Configuration);
 
-            services.AddAuthentication().AddGoogle(opts =>
-            {
-              opts.ClientId = this.Configuration["GoogleOAuthClientId"];
-              opts.ClientSecret = this.Configuration["GoogleOAuthClientSecret"];
-            });
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.ClientId = this.Configuration["GoogleOAuthClientId"];
+                    options.ClientSecret = this.Configuration["GoogleOAuthClientSecret"];
+                })
+                .AddMicrosoftAccount(options =>
+                {
+                        options.ClientId = this.Configuration["MicrosoftOAuthClientId"];
+                    options.ClientSecret = this.Configuration["MicrosoftOAuthClientSecret"];
+                });
+                /*.AddOpenIdConnect("oidc", "IdentityServer", options =>
+                {
+                    options.Authority = this.Configuration["IdentityServerAuthority"];
+                    options.RequireHttpsMetadata = false;
+
+                    options.ClientId = this.Configuration["IdentityServerClientId"];
+                    options.ClientSecret = this.Configuration["IdentityServerClientSecret"];
+                    options.ResponseType = "code";
+                    
+                    options.SaveTokens = true;
+                });*/
 
             services.AddControllersWithViews(configuration =>
             {
